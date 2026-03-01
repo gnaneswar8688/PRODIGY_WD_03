@@ -1,102 +1,69 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    margin: 0;
+    padding: 20px;
+    color: white;
 }
 
-body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#f4f6f9;   /* Professional light background */
+h1 {
+    margin-top: 20px;
 }
 
-/* Card Container */
-.container{
-    background:#ffffff;
-    padding:35px;
-    width:90%;
-    max-width:400px;
-    border-radius:15px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.08);
-    text-align:center;
-    transition:0.3s ease;
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 8px;
+    justify-content: center;
+    margin: 25px auto;
 }
 
-.container:hover{
-    box-shadow:0 15px 40px rgba(0,0,0,0.12);
+.cell {
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 10px;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 100px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #4e73df;
 }
 
-/* Title */
-h2{
-    margin-bottom:20px;
-    color:#333;
-    font-weight:600;
+.cell:hover {
+    transform: scale(1.05);
 }
 
-/* Stopwatch Display */
-#display{
-    font-size:46px;
-    font-weight:bold;
-    margin-bottom:25px;
-    color:#222;
-    letter-spacing:2px;
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f6c23e;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* Buttons Layout */
-.buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
+button:hover {
+    background-color: #dda20a;
 }
 
-/* Buttons Style */
-button{
-    flex:1 1 45%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    color:white;
-    transition:all 0.2s ease;
+#status {
+    font-size: 22px;
+    font-weight: bold;
 }
 
-/* Button Colors */
-.start{ background:#27ae60; }
-.pause{ background:#f39c12; color:black; }
-.reset{ background:#e74c3c; }
-.lap{ background:#2980b9; }
-
-/* Hover Effect */
-button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+/* Celebration animation */
+.win-message {
+    color: yellow;
+    animation: pop 0.5s ease;
 }
 
-/* Touch Effect */
-button:active{
-    transform:scale(0.95);
-}
-
-/* Lap List */
-ul{
-    margin-top:25px;
-    max-height:150px;
-    overflow-y:auto;
-    padding:0;
-}
-
-/* Lap Items */
-li{
-    list-style:none;
-    padding:8px;
-    margin:6px 0;
-    background:#f1f3f6;
-    border-radius:6px;
-    font-size:14px;
-    color:#444;
+@keyframes pop {
+    0% { transform: scale(0.5); }
+    70% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }

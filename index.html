@@ -1,30 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Professional Stopwatch</title>
-
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container">
-    <h2>⏱ Stopwatch</h2>
+<h1>Tic Tac Toe Game</h1>
 
-    <div id="display">00:00:00</div>
+<button onclick="setMode('pvp')">Player vs Player</button>
+<button onclick="setMode('ai')">Player vs AI</button>
 
-    <div class="buttons">
-        <button class="start" onclick="start()">Start</button>
-        <button class="pause" onclick="pause()">Pause</button>
-        <button class="reset" onclick="reset()">Reset</button>
-        <button class="lap" onclick="lap()">Lap</button>
-    </div>
+<h2 id="status">Player X Turn</h2>
 
-    <ul id="laps"></ul>
-</div>
+<div class="board" id="board"></div>
+
+<button onclick="restart()">Restart</button>
 
 <script src="script.js"></script>
+
 </body>
 </html>

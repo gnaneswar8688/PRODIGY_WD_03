@@ -1,45 +1,85 @@
-let timer;
-let seconds = 0;
-let running = false;
+let board = ["","","","","","","","",""];
+let player = "X";
+let gameOver = false;
+let mode = "pvp";
 
-function updateDisplay(){
-    let hrs = Math.floor(seconds / 3600);
-    let mins = Math.floor((seconds % 3600) / 60);
-    let secs = seconds % 60;
+const boardDiv = document.getElementById("board");
+const statusText = document.getElementById("status");
 
-    document.getElementById("display").innerText =
-        String(hrs).padStart(2,'0') + ":" +
-        String(mins).padStart(2,'0') + ":" +
-        String(secs).padStart(2,'0');
-}
+const winPatterns = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+];
 
-function start(){
-    if(!running){
-        running = true;
-        timer = setInterval(() => {
-            seconds++;
-            updateDisplay();
-        },1000);
+function createBoard() {
+    boardDiv.innerHTML = "";
+    for(let i=0;i<9;i++) {
+        let cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.onclick = () => play(i);
+        boardDiv.appendChild(cell);
     }
 }
 
-function pause(){
-    running = false;
-    clearInterval(timer);
+function play(index) {
+    if(board[index] !== "" || gameOver) return;
+
+    board[index] = player;
+    boardDiv.children[index].innerText = player;
+
+    checkWinner();
+
+    if(!gameOver) {
+        player = player === "X" ? "O" : "X";
+        statusText.innerText = "Player " + player + " Turn";
+    }
+
+    if(mode === "ai" && player === "O" && !gameOver) {
+        setTimeout(aiMove, 400);
+    }
 }
 
-function reset(){
-    running = false;
-    clearInterval(timer);
-    seconds = 0;
-    updateDisplay();
-    document.getElementById("laps").innerHTML = "";
+function aiMove() {
+    let empty = board
+        .map((v,i) => v === "" ? i : null)
+        .filter(v => v !== null);
+
+    let move = empty[Math.floor(Math.random() * empty.length)];
+    play(move);
 }
 
-function lap(){
-    if(seconds === 0) return;
+function checkWinner() {
+    for(let pattern of winPatterns) {
+        let [a,b,c] = pattern;
 
-    let li = document.createElement("li");
-    li.textContent = "Lap: " + document.getElementById("display").innerText;
-    document.getElementById("laps").appendChild(li);
+        if(board[a] && board[a] === board[b] && board[a] === board[c]) {
+            statusText.innerText = "🎉 Player " + board[a] + " Wins!";
+            statusText.classList.add("win-message");
+            gameOver = true;
+            return;
+        }
+    }
+
+    if(!board.includes("")) {
+        statusText.innerText = "Game Draw!";
+        statusText.classList.add("win-message");
+        gameOver = true;
+    }
 }
+
+function restart() {
+    board = ["","","","","","","","",""];
+    player = "X";
+    gameOver = false;
+    statusText.innerText = "Player X Turn";
+    statusText.classList.remove("win-message");
+    createBoard();
+}
+
+function setMode(m) {
+    mode = m;
+    restart();
+}
+
+createBoard();
